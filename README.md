@@ -199,7 +199,7 @@ Antes de instalar, asegúrate de tener:
 
 ```bash
 git clone https://github.com/AnderssonEspinoza/gestion-clientes-laravel.git
-cd clientmanager
+cd gestion-clientes
 ```
 
 ### 2. Instalar Dependencias PHP
@@ -402,7 +402,7 @@ Sucursal::create([
 users (1) ──── (N) asignacions (N) ──── (1) clientes
   │                                           │
   │                                           │
-  └─── (N) sucursales                        │
+  └─── (N) sucursales                         │
                                               │
 asignacions (1) ──── (N) historial_atencion
 ```
