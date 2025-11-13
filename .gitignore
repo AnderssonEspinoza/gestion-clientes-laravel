@@ -41,3 +41,15 @@ yarn-error.log
 
 # Ignorar archivos temporales
 getColumnListing('Clientes')
+
+/bootstrap/cache/*.php
+# Abre .gitignore y asegúrate que tenga esto:
+/storage/*.key
+/storage/framework/cache/*
+!/storage/framework/cache/.gitkeep
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitkeep
+/storage/framework/views/*
+!/storage/framework/views/.gitkeep
+/bootstrap/cache/*
+!/bootstrap/cache/.gitkeep
