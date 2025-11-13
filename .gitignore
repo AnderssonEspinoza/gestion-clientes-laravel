@@ -22,34 +22,36 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/storage/framework/
-/vendor
-.env
-.env.backup
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
 npm-debug.log
 yarn-error.log
-
-# Ignorar copias de seguridad de la base de datos
 *.sql
 
-# Ignorar archivos temporales
-getColumnListing('Clientes')
+# Storage - mantener estructura pero ignorar contenido
+/storage/app/*
+!/storage/app/.gitignore
+!/storage/app/public
+/storage/app/public/*
+!/storage/app/public/.gitignore
 
-/bootstrap/cache/*.php
-# Abre .gitignore y asegúrate que tenga esto:
-/storage/*.key
 /storage/framework/cache/*
+!/storage/framework/cache/.gitignore
 !/storage/framework/cache/.gitkeep
+
 /storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
 !/storage/framework/sessions/.gitkeep
+
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+
 /storage/framework/views/*
+!/storage/framework/views/.gitignore
 !/storage/framework/views/.gitkeep
+
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Bootstrap cache
 /bootstrap/cache/*
+!/bootstrap/cache/.gitignore
 !/bootstrap/cache/.gitkeep
