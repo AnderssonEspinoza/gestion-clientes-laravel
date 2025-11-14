@@ -450,11 +450,9 @@ graph TD
 ## 🗺️ Roadmap
 
 ### Versión 1.1 (Próxima)
-- [ ] Notificaciones push en tiempo real
 - [ ] Integración directa con API de ManyChat
 - [ ] Sistema de comisiones por ventas
 - [ ] Chat interno entre asesores
-- [ ] Exportación automática de reportes
 
 ### Versión 1.2 (Futuro)
 - [ ] App móvil nativa (Flutter)
