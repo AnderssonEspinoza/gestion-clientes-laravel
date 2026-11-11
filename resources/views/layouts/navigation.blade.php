@@ -1,73 +1,80 @@
 <!-- resources/views/layouts/navigation.blade.php -->
-<nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+<nav class="cm-nav" aria-label="Navegación principal">
+    <div class="cm-nav-frame">
+        <div class="cm-nav-layout">
             
             <!-- LOGO -->
-            <div class="flex-shrink-0 flex items-center text-xl font-bold text-gray-800 dark:text-white">
-                 CLIENTMANAGER
+            <div class="cm-brand">
+                <span class="cm-brand-mark" aria-hidden="true"></span>
+                ClientManager
             </div>
 
             <!-- Menú Desktop -->
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="{{ route('clientes.index') }}" class="text-gray-700 dark:text-gray-200 hover:text-red-500">
+            <div class="cm-nav-links">
+                <a href="{{ route('clientes.index') }}" class="cm-nav-link cm-nav-disponibles">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
                     Clientes Disponibles
                 </a>
 
-                <a href="{{ route('mis-clientes') }}" class="text-gray-700 dark:text-gray-200 hover:text-red-500">
+                <a href="{{ route('mis-clientes') }}" class="cm-nav-link cm-nav-asignados">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14v14H5z M8 12l2.5 2.5L16 9"/></svg>
                     Mis Clientes
                 </a>
 
                 <!-- Mostrar Reportes solo si el usuario es administrador -->
                 @if(Auth::user()->role == 'admin')
-                    <a href="{{ route('reporte.index') }}" class="text-gray-700 dark:text-gray-200 hover:text-blue-500">
+                    <a href="{{ route('reporte.index') }}" class="cm-nav-link cm-nav-reportes">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16M9 15v-3m5 3V9m5 6V5"/></svg>
                         Reportes
                     </a>
                 @endif
             </div>
 
             <!-- USUARIO + LOGOUT (DESKTOP) -->
-            <div class="hidden md:flex items-center space-x-4">
-                <span class="text-gray-700 dark:text-gray-200">{{ Auth::user()->getRoleDisplayName() }}: {{ Auth::user()->name }}</span>
+            <div class="cm-nav-account">
+                <span class="cm-account-name"><small>{{ Auth::user()->getRoleDisplayName() }}</small><strong>{{ Auth::user()->name }}</strong></span>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded">
+                    <button type="submit" class="cm-signout">
                         Salir
                     </button>
                 </form>
             </div>
 
             <!-- BOTÓN HAMBURGUESA (SOLO MÓVIL) -->
-            <div class="flex items-center md:hidden">
-                <button id="menu-toggle" class="text-gray-700 dark:text-gray-200 focus:outline-none">
-                    ☰
+            <div class="cm-menu-control">
+                <button id="menu-toggle" type="button" class="cm-menu-toggle" aria-label="Menú de navegación" aria-controls="mobile-menu" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
                 </button>
             </div>
         </div>
     </div>
 
     <!-- MENÚ MÓVIL -->
-    <div id="mobile-menu" class="hidden md:hidden bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-        <a href="{{ route('clientes.index') }}" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800">
+    <div id="mobile-menu" class="hidden cm-mobile-menu">
+        <a href="{{ route('clientes.index') }}" class="cm-nav-link cm-nav-disponibles">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
             Clientes Disponibles
         </a>
-        <a href="{{ route('mis-clientes') }}" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800">
+        <a href="{{ route('mis-clientes') }}" class="cm-nav-link cm-nav-asignados">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14v14H5z M8 12l2.5 2.5L16 9"/></svg>
             Mis Clientes
         </a>
 
         <!-- Mostrar Reportes solo si el usuario es administrador en el menú móvil -->
         @if(Auth::user()->role == 'admin')
-            <a href="{{ route('reporte.index') }}" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800">
+            <a href="{{ route('reporte.index') }}" class="cm-nav-link cm-nav-reportes">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16M9 15v-3m5 3V9m5 6V5"/></svg>
                 Reportes
             </a>
         @endif
 
-        <div class="border-t border-gray-200 dark:border-gray-700"></div>
-        <div class="px-4 py-2 flex items-center justify-between">
-            <span class="text-gray-700 dark:text-gray-200">{{ Auth::user()->name }}</span>
+        <div class="cm-nav-divider"></div>
+        <div class="cm-mobile-account">
+            <span class="cm-account-name">{{ Auth::user()->name }}</span>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded">
+                <button type="submit" class="cm-signout">
                     Salir
                 </button>
             </form>
@@ -75,8 +82,16 @@
     </div>
 
     <script>
+        document.querySelectorAll('.cm-nav-link').forEach(link => {
+            if (link.pathname === window.location.pathname) {
+                link.setAttribute('aria-current', 'page');
+            } else if (window.location.pathname.startsWith(link.pathname + '/')) {
+                link.setAttribute('aria-current', 'location');
+            }
+        });
         document.getElementById('menu-toggle').addEventListener('click', function () {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const closed = document.getElementById('mobile-menu').classList.toggle('hidden');
+            this.setAttribute('aria-expanded', String(!closed));
         });
     </script>
 </nav>

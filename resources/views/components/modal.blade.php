@@ -46,17 +46,18 @@ $maxWidth = [
     x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
     x-on:keydown.shift.tab.prevent="prevFocusable().focus()"
     x-show="show"
+    role="dialog" aria-modal="true"
     class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
     style="display: {{ $show ? 'block' : 'none' }};"
 >
     <div
         x-show="show"
-        class="fixed inset-0 transform transition-all"
+        class="cm-alpine-scrim fixed inset-0 transition-opacity"
         x-on:click="show = false"
-        x-transition:enter="ease-out duration-300"
+        x-transition:enter="cm-ease duration-200 motion-reduce:duration-0"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
-        x-transition:leave="ease-in duration-200"
+        x-transition:leave="cm-ease duration-150 motion-reduce:duration-0"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
     >
@@ -65,13 +66,13 @@ $maxWidth = [
 
     <div
         x-show="show"
-        class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
-        x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        class="cm-alpine-panel mb-6 overflow-hidden transform transition-[opacity,transform] sm:w-full {{ $maxWidth }} sm:mx-auto"
+        x-transition:enter="cm-ease duration-200 motion-reduce:duration-0"
+        x-transition:enter-start="opacity-0 translate-y-1 scale-[0.97]"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave="ease-in duration-200"
+        x-transition:leave="cm-ease duration-150 motion-reduce:duration-0"
         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        x-transition:leave-end="opacity-0 translate-y-1 scale-[0.97]"
     >
         {{ $slot }}
     </div>

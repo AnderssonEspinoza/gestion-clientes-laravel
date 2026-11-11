@@ -2,25 +2,25 @@
 
 @section('content')
 
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Mis Clientes Asignados</h1>
+<div class="cm-page cm-client-list cm-assigned">
+    <h1 class="cm-title cm-title-spaced">Mis clientes asignados</h1>
     
     @if(session('success'))
-        <div class="bg-green-200 text-green-800 p-2 mb-4 rounded">
+        <div role="status" class="bg-green-200 text-green-800 p-2 mb-4 rounded">
             {{ session('success') }}
         </div>
     @endif
     
     @if(session('error'))
-        <div class="bg-red-200 text-red-800 p-2 mb-4 rounded">
+        <div role="alert" class="bg-red-200 text-red-800 p-2 mb-4 rounded">
             {{ session('error') }}
         </div>
     @endif
     
     @if($misClientes->isEmpty())
-        <p>No tienes clientes asignados.</p>
+        <p class="cm-empty">No tienes clientes asignados.</p>
     @else
-        <div class="overflow-x-auto table-responsive">
+        <div class="cm-table-scroll table-responsive" role="region" aria-label="Tabla de clientes asignados" tabindex="0">
             <table class="min-w-full border text-sm md:text-base">
                 <thead>
                     <tr class="bg-gray-200">
@@ -39,7 +39,7 @@
                         <td class="border px-4 py-2">{{ $cliente->telefono ?? '-' }}</td>
                         
                         <td>
-                            <select class="form-select form-select-sm estado-select" 
+                            <select aria-label="Estado del cliente" class="form-select form-select-sm estado-select"
                                     data-cliente-id="{{ $cliente->id }}"
                                     style="min-width: 160px;">
                                 @foreach(App\Models\Cliente::ESTADOS as $key => $label)
@@ -51,7 +51,7 @@
                             </select>
                         </td>
 
-                        <td class="border px-4 py-2 space-x-2">
+                        <td class="border px-4 py-2 cm-row-actions">
                             <a href="{{ route('mis-clientes.show', $cliente->id) }}"                                 
                                class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">                                 
                                 Ver                             
@@ -86,13 +86,13 @@
         </div>
 
         <!-- Vista de Tarjetas en móviles -->
-        <div class="client-card hidden md:none">
+        <div class="client-card">
             @foreach($misClientes as $cliente)
                 <div class="client-card-item">
                     <h2>{{ $cliente->nombre }}</h2>
-                    <p><strong>📧:</strong> {{ $cliente->email }}</p>
-                    <p><strong>📞:</strong> {{ $cliente->telefono ?? '-' }}</p>
-                    <p><strong>Estado:</strong> <select class="form-select form-select-sm estado-select" 
+                    <p><strong>Email:</strong> {{ $cliente->email }}</p>
+                    <p><strong>Teléfono:</strong> {{ $cliente->telefono ?? '-' }}</p>
+                    <p><strong>Estado:</strong> <select aria-label="Estado del cliente" class="form-select form-select-sm estado-select"
                                     data-cliente-id="{{ $cliente->id }}"
                                     style="min-width: 160px;">
                                 @foreach(App\Models\Cliente::ESTADOS as $key => $label)
@@ -124,117 +124,20 @@
 </div>
 
 <!-- Contenedor de notificaciones -->
-<div id="toast-container" class="fixed bottom-4 right-4 z-50"></div>
+<div id="toast-container" class="cm-toasts" aria-live="polite"></div>
 
 <!-- Modal de Confirmación -->
-<div id="finalizarModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden">
-    <div class="modal bg-white p-6 rounded-lg shadow-lg w-96">
-        <h3 class="text-lg font-semibold">Confirmar Acción</h3>
+<div id="finalizarModal" class="cm-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="mis-dialog-title" data-cm-confirmation>
+    <div class="modal cm-dialog-panel">
+        <h3 id="mis-dialog-title">Confirmar acción</h3>
         <p class="text-sm text-gray-700 mb-4">¿Estás seguro de que deseas finalizar a este cliente?</p>
-        <div class="container-actions flex justify-end space-x-4">
+        <div class="container-actions cm-dialog-actions">
             <button id="cancelarFinalizar" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancelar</button>
             <button id="confirmarFinalizar" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Confirmar</button>
         </div>
     </div>
 </div>
 
-<style>
-    @media (max-width: 700px) {
-    /* Ocultar la tabla en pantallas pequeñas */
-    .table-responsive {
-        display: none;
-    }
-
-    /* Mostrar las tarjetas en pantallas pequeñas */
-    .client-card {
-        /* display: block; */
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        margin: 8px;
-        padding: 16px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .client-card h2 {
-        font-size: 1.125rem;
-        font-weight: 600;
-    }
-
-    .client-card p {
-        font-size: 0.875rem;
-        margin-top: 4px;
-    }
-    .client-card-item{
-        background-color: #D9D2D2;
-        padding: 16px;
-        /* margin-bottom: 16px; Espacio entre las tarjetas */
-        border-radius: 8px; /* Bordes redondeados */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-        border: 1px solid #e5e7eb; /* Borde gris claro */
-
-    }
-
-    .client-card .actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .client-card .action-btn {
-        padding: 8px 16px;
-        font-size: 0.875rem;
-        border-radius: 8px;
-        cursor: pointer;
-    }
-
-    .client-card .action-btn.bg-blue-500 {
-        background-color: #2563eb; /* Azul */
-    }
-
-    .client-card .action-btn.bg-orange-500 {
-        background-color: #ea580c; /* Naranja */
-    }
-
-    .client-card .action-btn.bg-green-500 {
-        background-color: #10b981; /* Verde */
-    }
-
-    .client-card .action-btn:hover {
-        opacity: 0.9;
-    }
-    .form-select{
-        padding: 3px 8px;
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 450px){
-    .action-btn{
-        /* width: 30%; */
-        font-size: 10px;
-        text-align: center;
-        /* width: 90px; */
-    }
-    #finalizarForm .action-btn{
-        /* width: 90px; */
-        /* padding: auto; */
-    }
-    .modal{
-        width: 80vw;
-    }
-    #cancelarFinalizar, #confirmarFinalizar{
-        font-size: 13px;
-        width: 50%;
-    }
-    .container-actions{
-        justify-content: center;
-    }
-}
-
-</style>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -272,11 +175,10 @@ $('#confirmarFinalizar').click(function() {
                 
                 // Animación de eliminación con transición
                 var fila = $('#cliente-' + clienteId);
-                fila.css('transition', 'all 0.3s ease-out'); // Transición suave
+                fila.css('transition', 'opacity 160ms var(--cm-ease)'); // Transición suave
                 fila.css('background-color', '#dcfce7'); // Color de fondo verde claro
                 setTimeout(function() {
                     fila.css('opacity', '0'); // Hacerla invisible
-                    fila.css('transform', 'translateX(-100%)'); // Mover fuera de la vista
                     setTimeout(function() {
                         fila.remove(); // Eliminar la fila después de la animación
                     }, 300); // Tiempo de espera para eliminar la fila
@@ -304,7 +206,7 @@ $('#cancelarFinalizar').click(function() {
 function mostrarToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
-    toast.classList.add('toast', 'p-4', 'rounded-lg', 'shadow-lg', 'mb-2', 'w-80', 'text-white', 'transition', 'duration-300', 'ease-in-out');
+    toast.classList.add('toast', 'p-4', 'rounded-lg', 'shadow-lg', 'mb-2', 'w-80', 'text-white', 'transition-opacity', 'duration-150');
 
     // Establecer los colores según el tipo de notificación (success o error)
     if (type === 'success') {
@@ -340,30 +242,18 @@ function cerrarToast(button) {
 
 // Definir colores para cada estado
 const coloresEstados = {
-    'pendiente': '#ffc107',           // Amarillo
-    'en_evaluacion': '#0dcaf0',       // Azul
-    'califica': '#198754',            // Verde
-    'no_califica': '#dc3545',         // Rojo
-    'venta_concretada': '#6f42c1'     // Morado
+    pendiente: ['#fff1ce', '#684900'],
+    en_evaluacion: ['#e4eef9', '#234e75'],
+    califica: ['#dff2e9', '#175747'],
+    no_califica: ['#fbe8ed', '#892c46'],
+    venta_concretada: ['#eee8fa', '#513781'],
 };
 
-// Función para aplicar colores de acuerdo al estado
 function aplicarColorEstado(selectElement, estado) {
-    const color = coloresEstados[estado];
-    if (color) {
-        selectElement.style.backgroundColor = color;
-        selectElement.style.color = '#ffffff';
-        selectElement.style.fontWeight = 'bold';
-        selectElement.style.borderColor = color;
-        selectElement.style.borderWidth = '2px';
-    } else {
-        // Restablecer si no hay color definido
-        selectElement.style.backgroundColor = '#f8f9fa';
-        selectElement.style.color = '#212529';
-        selectElement.style.fontWeight = 'normal';
-        selectElement.style.borderColor = '#ced4da';
-        selectElement.style.borderWidth = '1px';
-    }
+    const [fondo, texto] = coloresEstados[estado] ?? ['var(--cm-subtle)', 'var(--cm-ink)'];
+    selectElement.style.backgroundColor = fondo;
+    selectElement.style.color = texto;
+    selectElement.style.fontWeight = '600';
 }
 
 // Función para cambiar el estado de un cliente
@@ -401,7 +291,7 @@ function cambiarEstado(selectElement) {
             console.log('Estado actualizado a:', data.nuevo_estado);
 
             // Animación de éxito
-            selectElement.style.boxShadow = '0 0 15px rgba(255,255,255,0.9)';
+            selectElement.style.boxShadow = 'inset 0 0 0 1px var(--cm-accent)';
             setTimeout(() => {
                 selectElement.style.boxShadow = '';
             }, 1000);
@@ -415,7 +305,7 @@ function cambiarEstado(selectElement) {
         selectElement.value = estadoOriginal;
         aplicarColorEstado(selectElement, estadoOriginal);
 
-        selectElement.style.boxShadow = '0 0 10px #dc3545';
+        selectElement.style.boxShadow = 'inset 0 0 0 1px var(--cm-danger)';
         setTimeout(() => {
             selectElement.style.boxShadow = '';
         }, 2000);

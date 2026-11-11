@@ -9,22 +9,28 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=dm-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+    <body class="cm-auth antialiased">
+        <div class="cm-auth-shell">
+            <aside class="cm-auth-brand">
+                <a href="/" class="cm-brand">
+                    <span class="cm-brand-mark" aria-hidden="true"></span>
+                    ClientManager
                 </a>
-            </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
+                <div class="cm-auth-intro">
+                    <p>Gestiona tus clientes en un solo lugar.</p>
+                    <span>Seguimiento de leads, evaluación crediticia y ventas por sucursal.</span>
+                </div>
+            </aside>
+            <main class="cm-auth-main">
+                <div class="cm-auth-card">
+                    {{ $slot }}
+                </div>
+            </main>
         </div>
     </body>
 </html>

@@ -9,27 +9,28 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=dm-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     @stack('scripts')
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-white">
+    <body class="cm-app antialiased">
+        <div class="cm-shell">
+            <a class="cm-skip" href="#cm-main">Ir al contenido</a>
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="cm-slot-header">
+                    <div class="cm-page">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main id="cm-main" class="cm-main" tabindex="-1">
                 @yield('content')
             </main>
         </div>

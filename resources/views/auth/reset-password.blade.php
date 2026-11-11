@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <header class="cm-auth-heading"><h1>Restablecer contraseña</h1></header>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 

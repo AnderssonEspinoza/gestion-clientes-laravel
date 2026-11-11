@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <header class="cm-auth-heading"><h1>Crear cuenta</h1></header>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

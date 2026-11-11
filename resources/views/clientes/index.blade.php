@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="container mx-auto p-4 bg-white min-h-screen">
-    <div class="block-1 flex justify-between items-center mb-6">
-        <h1 class="title text-3xl font-bold text-gray-800"> 📋 Clientes Disponibles </h1>
-        <div class="block-refresh flex items-center space-x-4">
+<div class="container cm-page cm-client-list cm-available">
+    <div class="cm-page-heading">
+        <h1 class="cm-title">Clientes disponibles</h1>
+        <div class="cm-refresh">
             <span id="ultimo-refresh" class=" text-sm text-gray-500"></span>
-            <button onclick="refreshClientes()" class="btn-refresh bg-blue-500 text-white px-3 py-2 rounded text-sm hover:bg-blue-600 transition"> 🔄 Actualizar </button>
-            <label class="txt-refresh flex items-center">
+            <button onclick="refreshClientes()" class="btn-refresh bg-blue-500 text-white px-3 py-2 rounded text-sm hover:bg-blue-600 transition"> Actualizar </button>
+            <label class="cm-auto-refresh">
                 <input type="checkbox" id="auto-refresh" checked class="mr-2">
                 <span class="text-sm text-gray-600">Auto-actualizar (10s)</span>
             </label>
@@ -16,23 +16,23 @@
     </div>
 
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" id="success-message">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="status" id="success-message">
             {{ session('success') }}
         </div>
     @endif
 
     @if(session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" id="error-message">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert" id="error-message">
             {{ session('error') }}
         </div>
     @endif
 
     @if($clientesDisponibles->isEmpty())
-        <div class="text-center py-12">
-            <div class="text-gray-400 text-6xl mb-4">📋</div>
+        <div class="cm-empty">
+
             <h3 class="text-lg font-medium text-gray-800 mb-2">No hay clientes disponibles</h3>
             <p class="text-gray-600">Todos los clientes han sido asignados o no hay clientes nuevos.</p>
-            <button onclick="refreshClientes()" class=" mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"> 🔄 Verificar nuevamente </button>
+            <button onclick="refreshClientes()" class=" mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"> Verificar nuevamente </button>
         </div>
     @else
         <div class="mb-4">
@@ -42,7 +42,7 @@
             </p>
         </div>
 
-        <div class="overflow-x-auto bg-white rounded-lg shadow-md table-to-card">
+        <div class="cm-table-scroll table-to-card" role="region" aria-label="Tabla de clientes disponibles" tabindex="0">
             <table class="min-w-full text-sm text-left text-gray-700">
                 <thead class="bg-gray-50 border-b">
                     <tr>
@@ -86,11 +86,11 @@
                             <td class="px-6 py-4 text-xs text-gray-500">
                                 {{ $cliente->created_at->format('d/m/Y H:i') }}
                             </td>
-                            <td class="px-6 py-4 flex flex-wrap gap-3 justify-center">
+                            <td class="px-6 py-4 cm-row-actions">
                                 <!-- Botón Ver -->
-                                <a href="{{ route('clientes.show', $cliente->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-md transition"> 🔍 Ver </a>
+                                <a href="{{ route('clientes.show', $cliente->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-md transition"> Ver </a>
                                 <!-- Botón Asignarme mejorado -->
-                                <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-md transition asignar-btn" data-cliente-id="{{ $cliente->id }}"> ✋ Asignarme </button>
+                                <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-md transition asignar-btn" data-cliente-id="{{ $cliente->id }}"> Asignarme </button>
                             </td>
                         </tr>
                     @endforeach
@@ -98,7 +98,7 @@
             </table>
         </div>
         <!-- Vista móvil como tarjetas -->
-        <div class="client-card hidden md:none">
+        <div class="client-card">
             @foreach($clientesDisponibles as $cliente)
                 <div class="client-card-item">
                     <h2 class="font-medium">{{ $cliente->nombre }}</h2>
@@ -108,8 +108,8 @@
                     <p><strong>Creado:</strong> {{ $cliente->created_at->format('d/m/Y H:i') }}</p>
 
                     <div class="actions">
-                        <a href="{{ route('clientes.show', $cliente->id) }}" class="action-btn bg-blue-600 hover:bg-blue-700 text-white">🔍 Ver</a>
-                        <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" class="action-btn bg-green-600 hover:bg-green-700 text-white">✋ Asignarme</button>
+                        <a href="{{ route('clientes.show', $cliente->id) }}" class="action-btn bg-blue-600 hover:bg-blue-700 text-white">Ver</a>
+                        <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" class="action-btn bg-green-600 hover:bg-green-700 text-white">Asignarme</button>
                     </div>
                 </div>
             @endforeach
@@ -122,11 +122,11 @@
 </div>
 
 <!-- Modal de Confirmación -->
-<div id="confirmarModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden">
-    <div class="modal bg-white p-6 rounded-lg shadow-lg w-96">
-        <h3 class="text-lg font-semibold">Confirmar Acción</h3>
+<div id="confirmarModal" class="cm-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="index-dialog-title" data-cm-confirmation>
+    <div class="modal cm-dialog-panel">
+        <h3 id="index-dialog-title">Confirmar acción</h3>
         <p class="text-sm text-gray-700 mb-4" id="modalMensaje"></p>
-        <div class="container-actions flex justify-end space-x-4">
+        <div class="container-actions cm-dialog-actions">
             <button id="cancelarFinalizar" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancelar</button>
             <button id="confirmarFinalizar" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Confirmar</button>
         </div>
@@ -135,102 +135,8 @@
 
 
 <!-- Contenedor de los toasts -->
-<!-- <div id="toast-container" class="fixed bottom-4 right-4 z-50"></div> -->
+<!-- <div id="toast-container" class="cm-toasts" aria-live="polite"></div> -->
 
-<style>
-    @media (max-width: 745px) {
-        .title{
-            width: 100%;
-        }
-        .block-1, .block-refresh{
-            flex-direction: column;
-            /* gap: 10px; */
-        }
-        .block-refresh{
-            width: 100%;
-            align-items: start;
-            gap: 10px;
-        }
-        .txt-refresh, .btn-refresh{
-            margin: 0 !important;
-        }
-
-        .hidden-mobile{
-            display: none;
-        }
-
-        /* Cambiar el diseño de la tabla a tarjetas */
-        .table-to-card {
-            display: none; /* Ocultar la tabla */
-        }
-
-        .client-card {
-            display: block; /* Mostrar las tarjetas */
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background-color: white;
-            padding: 16px;
-            margin: 8px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .client-card h2 {
-            font-size: 1.125rem; /* Tamaño de texto de nombre */
-        }
-
-        .client-card .actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .client-card .action-btn {
-            padding: 8px 16px;
-            font-size: 0.875rem;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 50%;
-            text-align: center;
-        }
-
-        .client-card-item{
-            background-color: #D9D2D2;
-            padding: 16px;
-            margin-bottom: 16px; /* Espacio entre las tarjetas */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-            border: 1px solid #e5e7eb; /* Borde gris claro */
-
-        }
-
-    }
-
-    @media (max-width: 450px){
-        .modal{
-            width: 80vw;
-        }
-        .actions{
-            margin-top: 6px;
-        }
-        .container-actions{
-            justify-content: center;
-        }
-        #cancelarFinalizar, #confirmarFinalizar{
-            font-size: 13px;
-            width: 50%;
-        }
-        .client-card-item{
-            font-size: 13px;
-        }
-        .client-card .action-btn{
-            padding: 5px 12px;
-            font-size: 12px;
-        }
-
-    }
-</style>
 
 
 <!--  -->
@@ -261,7 +167,7 @@
 
             // Deshabilitar el botón y cambiar su texto
             boton.disabled = true;
-            boton.innerHTML = '⏳ Asignando...';
+            boton.innerHTML = 'Asignando…';
             boton.classList.remove('hover:bg-green-700');
             boton.classList.add('bg-gray-400', 'cursor-not-allowed');
 
@@ -285,11 +191,10 @@
                     // Quitar la fila del cliente asignado con animación
                     const fila = document.getElementById(`cliente-${clienteId}`);
                     if (fila) {
-                        fila.style.transition = 'all 0.3s ease-out';
+                        fila.style.transition = 'opacity 160ms var(--cm-ease)';
                         fila.style.backgroundColor = '#dcfce7'; // Verde claro
                         setTimeout(() => {
                             fila.style.opacity = '0';
-                            fila.style.transform = 'translateX(-100%)';
                             setTimeout(() => {
                                 fila.remove();
                                 verificarTablaVacia();
@@ -355,6 +260,7 @@
         // Crear nuevo mensaje
         const mensaje = document.createElement('div');
         mensaje.className = `px-4 py-3 rounded mb-4 mensaje-dinamico ${ tipo === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }`;
+        mensaje.setAttribute('role', tipo === 'success' ? 'status' : 'alert');
         mensaje.textContent = texto;
 
         // Insertar al inicio del container
@@ -365,7 +271,7 @@
         // Auto-remover después de 5 segundos
         setTimeout(() => {
             if (mensaje.parentNode) {
-                mensaje.style.transition = 'opacity 0.3s ease-out';
+                mensaje.style.transition = 'opacity 150ms var(--cm-ease)';
                 mensaje.style.opacity = '0';
                 setTimeout(() => mensaje.remove(), 300);
             }
@@ -382,7 +288,7 @@
                         <div class="text-gray-400 text-4xl mb-4">🎉</div>
                         <h3 class="text-lg font-medium text-gray-800 mb-2">¡No hay más clientes disponibles!</h3>
                         <p class="text-gray-600">Todos los clientes han sido asignados.</p>
-                        <button onclick="refreshClientes()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"> 🔄 Verificar nuevamente </button>
+                        <button onclick="refreshClientes()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"> Verificar nuevamente </button>
                     </td>
                 </tr>
             `;
