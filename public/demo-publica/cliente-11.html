@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html data-clientmanager-demo-version="2" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+<title>ClientManager · Demo</title>
+<!-- Fonts -->
+<link href="https://fonts.bunny.net" rel="preconnect"/>
+<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&amp;display=swap" rel="stylesheet">
+<!-- Scripts -->
+<link href="/demo-publica/assets/app.css" rel="stylesheet"/> </link></head>
+<body class="cm-app antialiased">
+<div class="cm-shell">
+<a class="cm-skip" href="#cm-main">Ir al contenido</a>
+<!-- resources/views/layouts/navigation.blade.php -->
+<nav aria-label="Navegación principal" class="cm-nav">
+<div class="cm-nav-frame">
+<div class="cm-nav-layout">
+<!-- LOGO -->
+<div class="cm-brand">
+<span aria-hidden="true" class="cm-brand-mark"></span>
+                ClientManager
+            </div>
+<!-- Menú Desktop -->
+<div class="cm-nav-links">
+<span class="cm-nav-caption">Espacio de trabajo</span>
+<a class="cm-nav-link cm-nav-disponibles" href="/demo-publica/index.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>
+                    Clientes Disponibles
+                </a>
+<a class="cm-nav-link cm-nav-asignados" href="/demo-publica/mis-clientes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M5 5h14v14H5z M8 12l2.5 2.5L16 9"></path></svg>
+                    Mis Clientes
+                </a>
+<!-- Mostrar Reportes solo si el usuario es administrador -->
+<a class="cm-nav-link cm-nav-reportes" href="/demo-publica/reportes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 4v16h16M9 15v-3m5 3V9m5 6V5"></path></svg>
+                        Reportes
+                    </a>
+</div>
+<!-- USUARIO + LOGOUT (DESKTOP) -->
+<div class="cm-nav-account">
+<span class="cm-account-name">
+<span aria-hidden="true" class="cm-account-initial">V</span>
+<span><strong>Visita de demostración</strong><small>Administrador(a)</small></span>
+</span>
+<a class="cm-signout" href="/login">Volver al acceso</a>
+</div>
+<!-- BOTÓN HAMBURGUESA (SOLO MÓVIL) -->
+<div class="cm-menu-control">
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Menú de navegación" class="cm-menu-toggle" id="menu-toggle" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<!-- MENÚ MÓVIL -->
+<div class="hidden cm-mobile-menu" id="mobile-menu">
+<a class="cm-nav-link cm-nav-disponibles" href="/demo-publica/index.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>
+            Clientes Disponibles
+        </a>
+<a class="cm-nav-link cm-nav-asignados" href="/demo-publica/mis-clientes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M5 5h14v14H5z M8 12l2.5 2.5L16 9"></path></svg>
+            Mis Clientes
+        </a>
+<!-- Mostrar Reportes solo si el usuario es administrador en el menú móvil -->
+<a class="cm-nav-link cm-nav-reportes" href="/demo-publica/reportes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 4v16h16M9 15v-3m5 3V9m5 6V5"></path></svg>
+                Reportes
+            </a>
+<div class="cm-nav-divider"></div>
+<div class="cm-mobile-account">
+<span class="cm-account-name">Visita de demostración</span>
+<a class="cm-signout" href="/login">Volver al acceso</a>
+</div>
+</div>
+
+</nav>
+<!-- Page Heading -->
+<!-- Page Content -->
+<main class="cm-main" id="cm-main" tabindex="-1">
+<p class="cm-demo-notice">Demo · Solo lectura con datos ficticios</p>
+<div class="cm-page cm-client-detail">
+<div class="cm-detail-card">
+<!-- Identidad del cliente -->
+<div class="cm-detail-banner">
+<div class="cm-detail-portrait">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24">
+<circle cx="12" cy="8" r="3.25"></circle>
+<path d="M5 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20" stroke-linecap="round"></path>
+</svg>
+
+</div>
+</div>
+<!-- Información del cliente -->
+<div class="cm-detail-content">
+<h1 class="cm-title">Nora Castillo</h1>
+<div class="cm-detail-fields">
+<div class="cm-detail-field">
+<span class="cm-detail-label">Email</span>
+<span class="text-gray-700 break-all">cliente10@example.test</span>
+</div>
+<div class="cm-detail-field">
+<span class="cm-detail-label">Teléfono</span>
+<span class="text-gray-700">-</span>
+</div>
+<div class="cm-detail-field">
+<span class="cm-detail-label">Fecha de registro</span>
+<span class="text-gray-700">11/11/2026 01:48</span>
+</div>
+</div>
+<!-- Botones de acción -->
+<div class="mt-6 flex flex-col sm:flex-row gap-3">
+<a class="cm-button cm-button-secondary w-full" href="/demo-publica/index.html">
+                   Volver
+                </a>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script defer="" src="/demo-publica/demo.js"></script></body>
+</html>

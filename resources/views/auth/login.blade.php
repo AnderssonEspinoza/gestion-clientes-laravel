@@ -60,5 +60,8 @@
                 </x-primary-button>
             </div>
         </form>
+
+        <a href="/demo-publica/index.html" class="cm-demo-entry">Explorar demo sin credenciales</a>
+        <p class="cm-demo-entry-caption">Recorre el CRM con datos ficticios en modo de solo lectura.</p>
     @endif
 </x-guest-layout>

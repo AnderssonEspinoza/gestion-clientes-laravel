@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<html data-clientmanager-demo-version="2" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+<title>ClientManager · Demo</title>
+<!-- Fonts -->
+<link href="https://fonts.bunny.net" rel="preconnect"/>
+<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&amp;display=swap" rel="stylesheet">
+<!-- Scripts -->
+<link href="/demo-publica/assets/app.css" rel="stylesheet"/> </link></head>
+<body class="cm-app antialiased">
+<div class="cm-shell">
+<a class="cm-skip" href="#cm-main">Ir al contenido</a>
+<!-- resources/views/layouts/navigation.blade.php -->
+<nav aria-label="Navegación principal" class="cm-nav">
+<div class="cm-nav-frame">
+<div class="cm-nav-layout">
+<!-- LOGO -->
+<div class="cm-brand">
+<span aria-hidden="true" class="cm-brand-mark"></span>
+                ClientManager
+            </div>
+<!-- Menú Desktop -->
+<div class="cm-nav-links">
+<span class="cm-nav-caption">Espacio de trabajo</span>
+<a class="cm-nav-link cm-nav-disponibles" href="/demo-publica/index.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>
+                    Clientes Disponibles
+                </a>
+<a class="cm-nav-link cm-nav-asignados" href="/demo-publica/mis-clientes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M5 5h14v14H5z M8 12l2.5 2.5L16 9"></path></svg>
+                    Mis Clientes
+                </a>
+<!-- Mostrar Reportes solo si el usuario es administrador -->
+<a class="cm-nav-link cm-nav-reportes" href="/demo-publica/reportes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 4v16h16M9 15v-3m5 3V9m5 6V5"></path></svg>
+                        Reportes
+                    </a>
+</div>
+<!-- USUARIO + LOGOUT (DESKTOP) -->
+<div class="cm-nav-account">
+<span class="cm-account-name">
+<span aria-hidden="true" class="cm-account-initial">V</span>
+<span><strong>Visita de demostración</strong><small>Administrador(a)</small></span>
+</span>
+<a class="cm-signout" href="/login">Volver al acceso</a>
+</div>
+<!-- BOTÓN HAMBURGUESA (SOLO MÓVIL) -->
+<div class="cm-menu-control">
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Menú de navegación" class="cm-menu-toggle" id="menu-toggle" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<!-- MENÚ MÓVIL -->
+<div class="hidden cm-mobile-menu" id="mobile-menu">
+<a class="cm-nav-link cm-nav-disponibles" href="/demo-publica/index.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>
+            Clientes Disponibles
+        </a>
+<a class="cm-nav-link cm-nav-asignados" href="/demo-publica/mis-clientes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M5 5h14v14H5z M8 12l2.5 2.5L16 9"></path></svg>
+            Mis Clientes
+        </a>
+<!-- Mostrar Reportes solo si el usuario es administrador en el menú móvil -->
+<a class="cm-nav-link cm-nav-reportes" href="/demo-publica/reportes.html">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24"><path d="M4 4v16h16M9 15v-3m5 3V9m5 6V5"></path></svg>
+                Reportes
+            </a>
+<div class="cm-nav-divider"></div>
+<div class="cm-mobile-account">
+<span class="cm-account-name">Visita de demostración</span>
+<a class="cm-signout" href="/login">Volver al acceso</a>
+</div>
+</div>
+
+</nav>
+<!-- Page Heading -->
+<!-- Page Content -->
+<main class="cm-main" id="cm-main" tabindex="-1">
+<p class="cm-demo-notice">Demo · Solo lectura con datos ficticios</p>
+<div class="dashboard-container cm-page">
+<div class="dashboard-header">
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-12">
+<div class="header-title">
+<h1 class="mb-0">Reportes</h1>
+</div>
+</div>
+<div class="col-lg-6 col-md-12">
+<form action="/demo-publica/reportes.html" class="filter-form" method="GET">
+<div class="filter-group">
+<select aria-label="Período" class="form-select" name="periodo">
+<option value="mes">Este Mes</option>
+<option value="trimestre">Trimestre</option>
+<option value="año">Año</option>
+</select>
+<select aria-label="Sucursal" class="form-select" name="sucursal">
+<option value="">Todas las sucursales</option>
+<option value="1">
+                                        Sucursal Centro (demo)
+                                    </option>
+</select>
+<button class="btn btn-primary">
+                                Aplicar
+                            </button>
+<a class="btn btn-outline-secondary" href="/demo-publica/reportes.html">
+                                Limpiar
+                            </a>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="dashboard-content">
+<div class="kpis-section">
+<div class="file-kpis row g-3 g-lg-4">
+<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+<div class="kpi-card kpi-primary">
+<div class="kpi-content">
+<div class="kpi-label">Total Clientes</div>
+<div class="kpi-value">16</div>
+<div class="kpi-change positive">
+<i class="fas fa-arrow-up"></i>
+                                0.0% vs período anterior
+                            </div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+<div class="kpi-card kpi-success">
+<div class="kpi-content">
+<div class="kpi-label">Ventas Concretadas</div>
+<div class="kpi-value">1</div>
+<div class="kpi-change positive">
+<i class="fas fa-arrow-up"></i>
+                                0.0% vs período anterior
+                            </div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+<div class="kpi-card kpi-info">
+<div class="kpi-content">
+<div class="kpi-label">Total Asesores</div>
+<div class="kpi-value">0</div>
+<div class="kpi-change positive">
+<i class="fas fa-arrow-up"></i>
+                                0.0% vs período anterior
+                            </div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+<div class="kpi-card kpi-warning">
+<div class="kpi-content">
+<div class="kpi-label">Total Sucursales</div>
+<div class="kpi-value">1</div>
+<div class="kpi-change positive">
+<i class="fas fa-arrow-up"></i>
+                                0.0% vs período anterior
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="charts-section">
+<div class="first-file row g-3 g-lg-4 mb-3 mb-lg-4">
+<div class="grafica-ha col-lg-8 col-md-12">
+<div class="chart-card">
+<div class="chart-header">
+<div class="chart-title">
+
+                                Historial de Atenciones
+                            </div>
+</div>
+<div class="chart-body">
+<canvas aria-label="Historial de atenciones" id="historialChart" role="img"></canvas>
+</div>
+</div>
+</div>
+<div class="grafica-ce col-lg-4 col-md-12">
+<div class="chart-card">
+<div class="chart-header">
+<div class="chart-title">
+
+                                Clientes por Estado
+                            </div>
+</div>
+<div class="chart-body">
+<canvas aria-label="Clientes por estado" id="clientesEstadoChart" role="img"></canvas>
+</div>
+</div>
+</div>
+</div>
+<div class="second-file row g-3 g-lg-4">
+<div class="grafica-vs col-lg-6 col-md-12">
+<div class="chart-card">
+<div class="chart-header">
+<div class="chart-title">
+
+                                Ventas por Sucursal
+                            </div>
+</div>
+<div class="chart-body">
+<canvas aria-label="Ventas por sucursal" id="ventasSucursalChart" role="img"></canvas>
+</div>
+</div>
+</div>
+<div class="grafica-ca col-lg-6 col-md-12">
+<div class="chart-card">
+<div class="chart-header">
+<div class="chart-title">
+
+                                Clientes por Asesor
+                            </div>
+</div>
+<div class="chart-body">
+<canvas aria-label="Clientes por asesor" id="clientesAsesorChart" role="img"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="table-section">
+<div class="chart-card">
+<div class="chart-header">
+<div class="chart-title">
+
+                        Lista de Asesores
+                    </div>
+</div>
+<div class="chart-body">
+<p class="cm-table-hint">Desliza la tabla para ver todas las columnas.</p>
+<div class="table-responsive">
+<table class="table table-hover" id="tablaAsesores">
+<thead>
+<tr>
+<th>
+                                        Nombre
+                                    </th>
+<th>
+                                        Email
+                                    </th>
+<th>
+                                        Sucursal
+                                    </th>
+<th class="text-center">
+                                        Acciones
+                                    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<div class="user-info">
+<div class="user-avatar">
+                                                V
+                                            </div>
+<span class="user-name">Visita de demostración</span>
+</div>
+</td>
+<td class="text-muted">visita@clientmanager.example.test</td>
+<td>
+<span class="badge badge-primary">Sucursal Centro (demo)</span>
+</td>
+<td class="text-center">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="/demo-publica/assets/vendor/jquery.min.js"></script>
+
+<script src="/demo-publica/assets/vendor/chart.min.js"></script>
+<script src="/demo-publica/assets/vendor/datatables.min.js"></script>
+<script src="/demo-publica/assets/vendor/datatables-bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Configurar DataTable
+    $('#tablaAsesores').DataTable({
+        responsive: true,
+        language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles en la tabla"
+        },
+        pageLength: 10
+    });
+
+    document.querySelectorAll('.kpi-change').forEach(cambio => {
+        if (cambio.textContent.trim().startsWith('0.0%')) cambio.classList.add('kpi-change-neutral');
+    });
+
+    const tablaDesplazable = document.querySelector('.dataTables_wrapper .row:has(table)');
+    if (tablaDesplazable) {
+        tablaDesplazable.tabIndex = 0;
+        tablaDesplazable.setAttribute('role', 'region');
+        tablaDesplazable.setAttribute('aria-label', 'Tabla de asesores');
+    }
+
+    // Datos desde backend
+    const nombresSucursales = ["Sucursal Centro (demo)"];
+    const ventas = [1];
+    const estados = ["pendiente","venta_concretada","en_evaluacion","califica","no_califica","inactivo"];
+    const clientesEstado = [15,1,0,0,0,0];
+    const fechasHistorial = ["2026-11-11"];
+    const totalAtenciones = [1];
+    const nombresAsesores = ["Visita de demostraci\u00f3n"];
+    const totalClientes = [1];
+
+    // Configuración global para charts
+    Chart.defaults.font.family = "'Instrument Sans', sans-serif";
+    Chart.defaults.font.size = 11;
+    const theme = getComputedStyle(document.documentElement);
+    Chart.defaults.color = theme.getPropertyValue('--cm-muted').trim();
+    const gridColor = theme.getPropertyValue('--cm-line').trim();
+    Chart.defaults.animation = false;
+
+    // Paleta de colores
+    const colors = {
+        primary: theme.getPropertyValue('--cm-accent').trim(),
+        success: '#4275a7',
+        info: '#5a8690',
+        warning: '#ae751a',
+        danger: '#b64d60',
+        purple: '#7762a7',
+        pink: '#a2527d',
+        orange: '#a95c37'
+    };
+
+    const etiquetasEstado = {
+        venta_concretada: 'Venta concretada',
+        no_califica: 'No califica',
+        inactivo: 'Inactivo',
+        pendiente: 'Pendiente',
+        en_evaluacion: 'En evaluación',
+        califica: 'Califica',
+    };
+    const coloresEstado = {
+        venta_concretada: colors.primary,
+        no_califica: colors.danger,
+        inactivo: colors.info,
+        pendiente: colors.warning,
+        en_evaluacion: colors.success,
+        califica: colors.purple,
+    };
+
+    function describirGrafico(id, etiquetas, valores) {
+        const canvas = document.getElementById(id);
+        const titulo = canvas.getAttribute('aria-label');
+        if (valores.length === 0) {
+            canvas.parentElement.dataset.chartEmpty = 'Sin datos para mostrar';
+            canvas.setAttribute('aria-label', titulo + ': sin datos para mostrar');
+        } else {
+            const valoresVisibles = etiquetas.map((etiqueta, i) => etiqueta + ': ' + valores[i]);
+            canvas.setAttribute('aria-label', titulo + '. ' + valoresVisibles.join(', '));
+        }
+    }
+
+    const etiquetasClientes = estados.map(estado => etiquetasEstado[estado] ?? estado);
+    describirGrafico('historialChart', fechasHistorial, totalAtenciones);
+    describirGrafico('clientesEstadoChart', etiquetasClientes, clientesEstado);
+    describirGrafico('ventasSucursalChart', nombresSucursales, ventas);
+    describirGrafico('clientesAsesorChart', nombresAsesores, totalClientes);
+
+    // Configuración responsive para charts
+    const responsiveOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                    padding: 15,
+                    font: {
+                        size: 10
+                    }
+                }
+            }
+        }
+    };
+
+    // Historial de Atenciones
+    new Chart(document.getElementById('historialChart'), {
+        type: 'line',
+        data: {
+            labels: fechasHistorial,
+            datasets: [{
+                label: 'Atenciones',
+                data: totalAtenciones,
+                borderColor: colors.primary,
+                backgroundColor: colors.primary + '20',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: colors.primary,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 3,
+                pointHoverRadius: 5
+            }]
+        },
+        options: {
+            ...responsiveOptions,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        precision: 0,
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Clientes por Estado
+    new Chart(document.getElementById('clientesEstadoChart'), {
+        type: 'doughnut',
+        data: {
+            labels: etiquetasClientes,
+            datasets: [{
+                data: clientesEstado,
+                backgroundColor: estados.map(estado => coloresEstado[estado] ?? colors.info),
+                borderWidth: 0,
+                hoverBorderWidth: 2,
+                hoverBorderColor: '#fff'
+            }]
+        },
+        options: {
+            ...responsiveOptions,
+            cutout: '72%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 10,
+                        font: {
+                            size: 11
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Ventas por Sucursal
+    new Chart(document.getElementById('ventasSucursalChart'), {
+        type: 'bar',
+        data: {
+            labels: nombresSucursales,
+            datasets: [{
+                label: 'Ventas',
+                data: ventas,
+                backgroundColor:[
+                    colors.purple,
+                    colors.primary,
+                    colors.success,
+                    colors.warning,
+                    colors.info,
+                    colors.danger
+
+                ],
+                borderColor: [
+                    colors.purple,
+                    colors.primary,
+                    colors.success,
+                    colors.warning,
+                    colors.info,
+                    colors.danger
+
+                ],
+                borderWidth: 2,
+                borderRadius: 4,
+                maxBarThickness: 48,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            ...responsiveOptions,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        precision: 0,
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Clientes por Asesor
+    new Chart(document.getElementById('clientesAsesorChart'), {
+        type: 'bar',
+        data: {
+            labels: nombresAsesores,
+            datasets: [{
+                label: 'Clientes',
+                data: totalClientes,
+                backgroundColor:[
+                    colors.orange,
+                    colors.pink,
+                    colors.purple,
+                    colors.primary,
+                    colors.success,
+                    colors.warning,
+                    colors.info,
+                    colors.danger
+
+                ],
+                borderColor: colors.info,
+                borderWidth: 2,
+                borderRadius: 4,
+                maxBarThickness: 48,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            ...responsiveOptions,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        precision: 0,
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+</main>
+</div>
+<script defer="" src="/demo-publica/demo.js"></script></body>
+</html>

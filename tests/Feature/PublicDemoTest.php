@@ -3,7 +3,7 @@
 test('the normal instance retains login and disables the demo entry point', function () {
     config(['demo.enabled' => false]);
 
-    $this->get('/login')->assertOk()->assertDontSee('Explorar demo');
+    $this->get('/login')->assertOk()->assertSee('Explorar demo sin credenciales');
     $this->post('/demo')->assertNotFound();
 });
 

@@ -1,5 +1,13 @@
 # Demo pública de ClientManager
 
+## Demo incluida en el despliegue habitual
+
+El login enlaza a `/demo-publica/index.html`. Las páginas de esa carpeta contienen únicamente datos ficticios y se sirven como archivos estáticos, sin sesión ni base de datos. Incluyen listas paginadas, fichas, la vista de clientes asignados y reportes con gráficas y búsqueda de asesores. Los filtros de período y sucursal conservan sus controles visuales, sobre un conjunto fijo de datos de ejemplo.
+
+La carpeta queda publicada al desplegar esta versión. No necesita nuevas variables de entorno. Para regenerarla desde la instancia local ficticia en el puerto 8766, ejecuta `python3 tools/export_public_demo.py` después del build. El exportador requiere Beautiful Soup (`beautifulsoup4`) y comprueba que las páginas proceden del modo de demostración. El servidor publicado utiliza los HTML ya generados.
+
+## Instancia dinámica opcional
+
 Publica la demo como una instancia independiente. La página de acceso presenta «Explorar demo» y abre una sesión de visita sin pedir credenciales. Los cambios de clientes, el registro, la recuperación de contraseña y el perfil quedan fuera de la demo.
 
 ## Preparar la base ficticia

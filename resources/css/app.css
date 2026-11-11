@@ -686,3 +686,25 @@
     color: var(--cm-accent);
     text-align: center;
 }
+
+.cm-demo-entry {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    margin-top: 1.5rem;
+    padding: .6rem .9rem;
+    border: 1px solid var(--cm-control-line);
+    border-radius: var(--cm-control-radius);
+    color: var(--cm-accent);
+    font-weight: 650;
+}
+.cm-demo-entry-caption {
+    margin-top: .5rem;
+    color: var(--cm-muted);
+    font-size: .8125rem;
+    text-align: center;
+}
+@media (hover: hover) and (pointer: fine) {
+    .cm-demo-entry:hover { background: var(--cm-accent-soft); }
+}
