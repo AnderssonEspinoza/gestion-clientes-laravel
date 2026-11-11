@@ -14,7 +14,7 @@
                     src="https://ui-avatars.com/api/?name={{ urlencode($cliente->nombre) }}&size=150&background=random"
                     alt="Foto de {{ $cliente->nombre }}"
                     class="cm-detail-avatar"
-                    onerror="this.hidden = true"
+                    onload="this.classList.add('cm-avatar-loaded')"
                 >
             </div>
         </div>

@@ -394,8 +394,9 @@
     border-radius: 50%;
     background: var(--cm-surface);
     object-fit: cover;
-    font-size: .625rem;
+    opacity: 0;
 }
+.cm-detail-avatar.cm-avatar-loaded { opacity: 1; }
 .cm-detail-content { padding: 1.5rem; }
 .cm-detail-fields { margin-top: 1.25rem; }
 .cm-detail-field { display: grid; gap: .25rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--cm-line); }
