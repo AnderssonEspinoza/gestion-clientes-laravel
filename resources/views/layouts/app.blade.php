@@ -31,6 +31,9 @@
 
             <!-- Page Content -->
             <main id="cm-main" class="cm-main" tabindex="-1">
+                @if (config('demo.enabled'))
+                    <p class="cm-demo-notice"><strong>Demo pública</strong> · Solo lectura con datos ficticios</p>
+                @endif
                 @yield('content')
                 {{ $slot ?? '' }}
             </main>

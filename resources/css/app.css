@@ -679,3 +679,10 @@
     .cm-app *, .cm-auth * { animation-duration: 0s !important; transition-duration: 0s !important; }
     .cm-app button:active, .cm-auth button:active, .cm-record-view:hover svg { transform: none !important; }
 }
+
+.cm-demo-notice {
+    padding: .7rem 1rem;
+    background: var(--cm-accent-soft);
+    color: var(--cm-accent);
+    text-align: center;
+}

@@ -94,7 +94,9 @@
                                 <!-- Botón Ver -->
                                 <a href="{{ route('clientes.show', $cliente->id) }}" class="cm-record-view" data-cm-focus="view-{{ $cliente->id }}">Ver <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
                                 <!-- Botón Asignarme mejorado -->
-                                <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" data-cm-focus="assign-{{ $cliente->id }}" class="asignar-btn cm-record-assign" data-cliente-id="{{ $cliente->id }}"> Asignarme </button>
+                                @unless (config('demo.enabled'))
+                                    <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" data-cm-focus="assign-{{ $cliente->id }}" class="asignar-btn cm-record-assign" data-cliente-id="{{ $cliente->id }}"> Asignarme </button>
+                                @endunless
                             </td>
                         </tr>
                     @endforeach

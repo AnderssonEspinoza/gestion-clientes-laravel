@@ -110,11 +110,14 @@
 
                                 Historial de Atenciones
                             </div>
-                            <div class="chart-actions">
-                                <button class="btn btn-sm btn-outline-secondary" aria-label="Descargar historial">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
-                            </div>
+                            @unless (config('demo.enabled'))
+                                <div class="chart-actions">
+                                    <button class="btn btn-sm btn-outline-secondary" aria-label="Descargar historial">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </button>
+                                </div>
+
+                            @endunless
                         </div>
                         <div class="chart-body">
                             <canvas id="historialChart" role="img" aria-label="Historial de atenciones"></canvas>
@@ -177,14 +180,17 @@
 
                         Lista de Asesores
                     </div>
-                    <div class="chart-actions">
-                        <button class="btn btn-sm btn-primary">
-                            Nuevo
-                        </button>
-                        <button class="btn btn-sm btn-success">
-                            Excel
-                        </button>
-                    </div>
+                    @unless (config('demo.enabled'))
+                        <div class="chart-actions">
+                            <button class="btn btn-sm btn-primary">
+                                Nuevo
+                            </button>
+                            <button class="btn btn-sm btn-success">
+                                Excel
+                            </button>
+                        </div>
+
+                    @endunless
                 </div>
                 <div class="chart-body">
                     <p class="cm-table-hint">Desliza la tabla para ver todas las columnas.</p>
@@ -226,14 +232,17 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <div class="action-buttons">
-                                            <button class="btn btn-sm btn-outline-primary" aria-label="Editar asesor">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m5 15-1 5 5-1L20 8l-4-4z" stroke-linejoin="round"/></svg>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-info" aria-label="Ver asesor">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
-                                            </button>
-                                        </div>
+                                        @unless (config('demo.enabled'))
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary" aria-label="Editar asesor">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m5 15-1 5 5-1L20 8l-4-4z" stroke-linejoin="round"/></svg>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-info" aria-label="Ver asesor">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+                                                </button>
+                                            </div>
+
+                                        @endunless
                                     </td>
                                 </tr>
                                 @endforeach

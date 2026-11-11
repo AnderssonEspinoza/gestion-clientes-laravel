@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('CLIENTMANAGER_DEMO', false) ? 'public_demo' : env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,6 +30,20 @@ return [
     */
 
     'connections' => [
+
+        'public_demo' => [
+            'driver' => 'mysql',
+            'host' => env('DEMO_DB_HOST', '127.0.0.1'),
+            'port' => env('DEMO_DB_PORT', '3306'),
+            'database' => 'clientmanager_public_demo',
+            'username' => env('DEMO_DB_USERNAME'),
+            'password' => env('DEMO_DB_PASSWORD'),
+            'unix_socket' => env('DEMO_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',

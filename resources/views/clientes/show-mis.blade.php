@@ -48,13 +48,15 @@
 
                 <!-- Como es "mis clientes", probablemente no necesites el botón de asignar -->
                 <!-- Si lo necesitas, manténlo -->
-                <form method="POST" action="{{ route('clientes.assign', $cliente->id) }}" class="w-full">
-                    @csrf
-                    <button type="submit"
-                             class="cm-button cm-button-primary w-full">
-                        Asignarme cliente
-                    </button>
-                </form>
+                @unless (config('demo.enabled'))
+                    <form method="POST" action="{{ route('clientes.assign', $cliente->id) }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                                 class="cm-button cm-button-primary w-full">
+                            Asignarme cliente
+                        </button>
+                    </form>
+                @endunless
             </div>
         </div>
     </div>

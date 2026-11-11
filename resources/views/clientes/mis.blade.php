@@ -48,7 +48,7 @@
                         <td role="cell" class="cm-record-phone"><span class="cm-field-label" aria-hidden="true">Teléfono</span>{{ $cliente->telefono ?? '-' }}</td>
                         <td role="cell" class="cm-record-status">
                             <span class="cm-field-label" aria-hidden="true">Estado</span>
-                            <select aria-label="Estado del cliente" class="form-select form-select-sm estado-select"
+                            <select @disabled(config('demo.enabled')) aria-label="Estado del cliente" class="form-select form-select-sm estado-select"
                                     data-cliente-id="{{ $cliente->id }}">
                                 @foreach(App\Models\Cliente::ESTADOS as $key => $label)
                                     <option value="{{ $key }}"
@@ -65,27 +65,29 @@
                                 Ver                             
                             </a>
 
-                            {{-- Finalizar --}}
-                            <form id="finalizarForm" data-id="{{ $cliente->id }}" method="POST" class="inline-block">
-                                @csrf
-                                <button type="button" 
-                                        class="bg-orange-500 hover:bg-red-600 text-white px-3 py-1 rounded finalizarBtn" 
-                                        data-id="{{ $cliente->id }}">
-                                    Finalizar
-                                </button>
-                            </form>
+                            @unless (config('demo.enabled'))
+                                {{-- Finalizar --}}
+                                <form id="finalizarForm" data-id="{{ $cliente->id }}" method="POST" class="inline-block">
+                                    @csrf
+                                    <button type="button"
+                                            class="bg-orange-500 hover:bg-red-600 text-white px-3 py-1 rounded finalizarBtn"
+                                            data-id="{{ $cliente->id }}">
+                                        Finalizar
+                                    </button>
+                                </form>
 
-                            @if($cliente->telefono)
-                                <a href="#"
-                                   onclick="abrirWhatsApp('{{ $cliente->telefono }}', '{{ $cliente->nombre }}')"
-                                   class="inline-block bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                                    WhatsApp
-                                </a>
-                            @else
-                                <span class="inline-block bg-gray-400 text-white px-3 py-1 rounded cursor-not-allowed">
-                                    Sin teléfono
-                                </span>
-                            @endif
+                                @if($cliente->telefono)
+                                    <a href="#"
+                                       onclick="abrirWhatsApp('{{ $cliente->telefono }}', '{{ $cliente->nombre }}')"
+                                       class="inline-block bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                                        WhatsApp
+                                    </a>
+                                @else
+                                    <span class="inline-block bg-gray-400 text-white px-3 py-1 rounded cursor-not-allowed">
+                                        Sin teléfono
+                                    </span>
+                                @endif
+                            @endunless
                         </td>
                     </tr>
                     @endforeach
