@@ -9,7 +9,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=dm-sans:400,500,600,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,8 +22,8 @@
                     ClientManager
                 </a>
                 <div class="cm-auth-intro">
-                    <p>Gestiona tus clientes en un solo lugar.</p>
-                    <span>Seguimiento de leads, evaluación crediticia y ventas por sucursal.</span>
+                    <p>Cada cliente, en su siguiente paso.</p>
+                    <span>Gestiona la atención, la evaluación y las ventas desde tu espacio de trabajo.</span>
                 </div>
             </aside>
             <main class="cm-auth-main">

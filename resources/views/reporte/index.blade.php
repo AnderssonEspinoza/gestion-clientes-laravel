@@ -9,7 +9,7 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="header-title">
 
-                        <h1 class="mb-0">Dashboard de Reportes</h1>
+                        <h1 class="mb-0">Reportes</h1>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
@@ -296,7 +296,7 @@ $(document).ready(function() {
     const totalClientes = {!! json_encode($clientesPorAsesor->pluck('total')->toArray()) !!};
 
     // Configuración global para charts
-    Chart.defaults.font.family = "'DM Sans', sans-serif";
+    Chart.defaults.font.family = "'Instrument Sans', sans-serif";
     Chart.defaults.font.size = 11;
     const theme = getComputedStyle(document.documentElement);
     Chart.defaults.color = theme.getPropertyValue('--cm-muted').trim();

@@ -3,7 +3,10 @@
 @section('content')
 
 <div class="cm-page cm-client-list cm-assigned">
-    <h1 class="cm-title cm-title-spaced">Mis clientes asignados</h1>
+    <header class="cm-page-heading">
+        <h1 class="cm-title">Mis clientes asignados</h1>
+        <p class="cm-page-summary">Consulta el estado de tus clientes y continúa su atención.</p>
+    </header>
     
     @if(session('success'))
         <div role="status" class="bg-green-200 text-green-800 p-2 mb-4 rounded">
@@ -21,37 +24,42 @@
         <p class="cm-empty">No tienes clientes asignados.</p>
     @else
         <div class="cm-table-scroll table-responsive" role="region" aria-label="Tabla de clientes asignados" tabindex="0">
-            <table class="min-w-full border text-sm md:text-base">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="border px-4 py-2">Nombre</th>
-                        <th class="border px-4 py-2">Email</th>
-                        <th class="border px-4 py-2">Teléfono</th>
-                        <th class="border px-4 py-2">Estado</th>
-                        <th class="border px-4 py-2">Acciones</th>
+            <table role="table" class="min-w-full text-sm md:text-base">
+                <thead role="rowgroup">
+                    <tr role="row" class="bg-gray-200">
+                        <th role="columnheader" scope="col" class="border px-4 py-2">Cliente</th>
+                        <th role="columnheader" scope="col" class="border px-4 py-2">Teléfono</th>
+                        <th role="columnheader" scope="col" class="border px-4 py-2">Estado</th>
+                        <th role="columnheader" scope="col" class="border px-4 py-2">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody role="rowgroup">
                     @foreach($misClientes as $cliente)
-                    <tr id="cliente-{{ $cliente->id }}" class="cliente-row border-b hover:bg-gray-50 transition">
-                        <td class="border px-4 py-2">{{ $cliente->nombre }}</td>
-                        <td class="border px-4 py-2">{{ $cliente->email }}</td>
-                        <td class="border px-4 py-2">{{ $cliente->telefono ?? '-' }}</td>
-                        
-                        <td>
+                    <tr role="row" id="cliente-{{ $cliente->id }}" class="cliente-row">
+                        <td role="cell" class="cm-record-identity">
+                            <div class="cm-record-person">
+                                <span class="cm-record-initial" aria-hidden="true">{{ mb_substr($cliente->nombre, 0, 1) }}</span>
+                                <div>
+                                    <strong>{{ $cliente->nombre }}</strong>
+                                    <span class="cm-record-email">{{ $cliente->email }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td role="cell" class="cm-record-phone"><span class="cm-field-label" aria-hidden="true">Teléfono</span>{{ $cliente->telefono ?? '-' }}</td>
+                        <td role="cell" class="cm-record-status">
+                            <span class="cm-field-label" aria-hidden="true">Estado</span>
                             <select aria-label="Estado del cliente" class="form-select form-select-sm estado-select"
-                                    data-cliente-id="{{ $cliente->id }}"
-                                    style="min-width: 160px;">
+                                    data-cliente-id="{{ $cliente->id }}">
                                 @foreach(App\Models\Cliente::ESTADOS as $key => $label)
-                                    <option value="{{ $key }}" 
-                                            {{ $cliente->estado == $key ? 'selected' : '' }} >
+                                    <option value="{{ $key }}"
+                                            {{ $cliente->estado == $key ? 'selected' : '' }}>
                                         {{ $label }}
                                     </option>
                                 @endforeach
                             </select>
                         </td>
 
-                        <td class="border px-4 py-2 cm-row-actions">
+                        <td role="cell" class="cm-row-actions">
                             <a href="{{ route('mis-clientes.show', $cliente->id) }}"                                 
                                class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">                                 
                                 Ver                             
@@ -85,41 +93,6 @@
             </table>
         </div>
 
-        <!-- Vista de Tarjetas en móviles -->
-        <div class="client-card">
-            @foreach($misClientes as $cliente)
-                <div class="client-card-item">
-                    <h2>{{ $cliente->nombre }}</h2>
-                    <p><strong>Email:</strong> {{ $cliente->email }}</p>
-                    <p><strong>Teléfono:</strong> {{ $cliente->telefono ?? '-' }}</p>
-                    <p><strong>Estado:</strong> <select aria-label="Estado del cliente" class="form-select form-select-sm estado-select"
-                                    data-cliente-id="{{ $cliente->id }}"
-                                    style="min-width: 160px;">
-                                @foreach(App\Models\Cliente::ESTADOS as $key => $label)
-                                    <option value="{{ $key }}" 
-                                            {{ $cliente->estado == $key ? 'selected' : '' }} >
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                    </p>
-
-                    <div class="actions">
-                        <a href="{{ route('mis-clientes.show', $cliente->id) }}" class="action-btn bg-blue-500 hover:bg-blue-600 text-white">Ver</a>
-                        <form id="finalizarForm" data-id="{{ $cliente->id }}" method="POST" class="inline-block">
-                            @csrf
-                            <button type="button" class="action-btn bg-orange-500 hover:bg-red-600 text-white finalizarBtn" data-id="{{ $cliente->id }}">Finalizar</button>
-                        </form>
-                        @if($cliente->telefono)
-                            <a href="#" onclick="abrirWhatsApp('{{ $cliente->telefono }}', '{{ $cliente->nombre }}')" class="action-btn bg-green-500 hover:bg-green-600 text-white">WhatsApp</a>
-                        @else
-                            <span class="action-btn bg-gray-400 text-white cursor-not-allowed">Sin teléfono</span>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
     @endif
 </div>
 
@@ -129,7 +102,7 @@
 <!-- Modal de Confirmación -->
 <div id="finalizarModal" class="cm-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="mis-dialog-title" data-cm-confirmation>
     <div class="modal cm-dialog-panel">
-        <h3 id="mis-dialog-title">Confirmar acción</h3>
+        <h3 id="mis-dialog-title">Finalizar atención</h3>
         <p class="text-sm text-gray-700 mb-4">¿Estás seguro de que deseas finalizar a este cliente?</p>
         <div class="container-actions cm-dialog-actions">
             <button id="cancelarFinalizar" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancelar</button>
@@ -180,6 +153,7 @@ $('#confirmarFinalizar').click(function() {
                 setTimeout(function() {
                     fila.css('opacity', '0'); // Hacerla invisible
                     setTimeout(function() {
+                        fila.get(0)?.dispatchEvent(new Event('cm:before-record-removal', { bubbles: true }));
                         fila.remove(); // Eliminar la fila después de la animación
                     }, 300); // Tiempo de espera para eliminar la fila
                 }, 500); // Tiempo de espera para aplicar la animación de color

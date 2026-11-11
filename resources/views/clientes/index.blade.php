@@ -2,18 +2,11 @@
 
 @section('content')
 
-<div class="container cm-page cm-client-list cm-available">
-    <div class="cm-page-heading">
+<div class="container cm-page cm-client-list cm-available" data-cm-refresh-page>
+    <header class="cm-page-heading">
         <h1 class="cm-title">Clientes disponibles</h1>
-        <div class="cm-refresh">
-            <span id="ultimo-refresh" class=" text-sm text-gray-500"></span>
-            <button onclick="refreshClientes()" class="btn-refresh bg-blue-500 text-white px-3 py-2 rounded text-sm hover:bg-blue-600 transition"> Actualizar </button>
-            <label class="cm-auto-refresh">
-                <input type="checkbox" id="auto-refresh" checked class="mr-2">
-                <span class="text-sm text-gray-600">Auto-actualizar (10s)</span>
-            </label>
-        </div>
-    </div>
+        <p class="cm-page-summary">Revisa los registros y asígnate los clientes que vas a atender.</p>
+    </header>
 
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="status" id="success-message">
@@ -27,40 +20,59 @@
         </div>
     @endif
 
+    <div class="cm-workbar">
+        @if(!$clientesDisponibles->isEmpty())
+            <p class="cm-result-count">
+                <span data-cm-result-count>{{ $clientesDisponibles->total() }}</span> clientes disponibles
+            </p>
+        @endif
+        <div class="cm-refresh">
+            <span id="ultimo-refresh" aria-live="off"></span>
+            <label class="cm-auto-refresh">
+                <input type="checkbox" id="auto-refresh" checked data-cm-focus="auto-refresh">
+                <span>Auto-actualizar (10 s)</span>
+            </label>
+            <button onclick="refreshClientes()" class="btn-refresh" data-cm-focus="refresh">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.4 5.7M20 5v6h-6"/></svg>
+                Actualizar
+            </button>
+        </div>
+    </div>
+
     @if($clientesDisponibles->isEmpty())
         <div class="cm-empty">
 
-            <h3 class="text-lg font-medium text-gray-800 mb-2">No hay clientes disponibles</h3>
+            <h2 class="text-lg font-medium mb-2">No hay clientes disponibles</h2>
             <p class="text-gray-600">Todos los clientes han sido asignados o no hay clientes nuevos.</p>
             <button onclick="refreshClientes()" class=" mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"> Verificar nuevamente </button>
         </div>
     @else
-        <div class="mb-4">
-            <p class="text-gray-700">
-                <strong>Total disponibles:</strong>
-                <span class="text-blue-600 font-semibold">{{ $clientesDisponibles->total() }}</span> clientes
-            </p>
-        </div>
-
         <div class="cm-table-scroll table-to-card" role="region" aria-label="Tabla de clientes disponibles" tabindex="0">
-            <table class="min-w-full text-sm text-left text-gray-700">
-                <thead class="bg-gray-50 border-b">
-                    <tr>
-                        <th class="px-6 py-3">Nombre</th>
-                        <th class="px-6 py-3 hidden-mobile">Email</th>
-                        <th class="px-6 py-3">Teléfono</th>
-                        <th class="px-6 py-3">Estado</th>
-                        <th class="px-6 py-3">Creado</th>
-                        <th class="px-6 py-3 text-center">Acciones</th>
+            <table role="table" class="min-w-full text-sm text-left text-gray-700">
+                <thead role="rowgroup" class="bg-gray-50 border-b">
+                    <tr role="row">
+                        <th role="columnheader" scope="col" class="px-6 py-3">Cliente</th>
+                        <th role="columnheader" scope="col" class="px-6 py-3">Teléfono</th>
+                        <th role="columnheader" scope="col" class="px-6 py-3">Estado</th>
+                        <th role="columnheader" scope="col" class="px-6 py-3">Registro</th>
+                        <th role="columnheader" scope="col" class="px-6 py-3 text-center">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white" id="clientes-tbody">
+                <tbody role="rowgroup" class="bg-white" id="clientes-tbody">
                     @foreach($clientesDisponibles as $cliente)
-                        <tr id="cliente-{{ $cliente->id }}" class="border-b hover:bg-gray-50 transition cliente-row">
-                            <td class="px-6 py-4 font-medium">{{ $cliente->nombre }}</td>
-                            <td class="px-6 py-4 hidden-mobile">{{ $cliente->email }}</td>
-                            <td class="px-6 py-4">{{ $cliente->telefono ?? '-' }}</td>
-                            <td class="px-6 py-4">
+                        <tr role="row" id="cliente-{{ $cliente->id }}" class="cliente-row">
+                            <td role="cell" class="cm-record-identity">
+                                <div class="cm-record-person">
+                                    <span class="cm-record-initial" aria-hidden="true">{{ mb_substr($cliente->nombre, 0, 1) }}</span>
+                                    <div>
+                                        <strong>{{ $cliente->nombre }}</strong>
+                                        <span class="cm-record-email">{{ $cliente->email }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td role="cell" class="cm-record-phone"><span class="cm-field-label" aria-hidden="true">Teléfono</span>{{ $cliente->telefono ?? '-' }}</td>
+                            <td role="cell" class="cm-record-status">
+                                <span class="cm-field-label" aria-hidden="true">Estado</span>
                                 @php
                                     $estilos = [
                                         'sin_asignar' => 'bg-blue-100 text-blue-800',
@@ -70,51 +82,25 @@
                                         'activo' => 'bg-green-100 text-green-800',
                                         'inactivo' => 'bg-gray-100 text-gray-800',
                                     ];
-                                    $iconos = [
-                                        'sin_asignar' => '📋',
-                                        'pendiente' => '⏳',
-                                        'aprobado' => '✅',
-                                        'rechazado' => '❌',
-                                        'activo' => '✅',
-                                        'inactivo' => '⚫',
-                                    ];
                                 @endphp
-                                <span class="px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 w-fit {{ $estilos[$cliente->estado] ?? 'bg-gray-100 text-gray-800' }}">
-                                    {{ $iconos[$cliente->estado] ?? 'ℹ️' }} {{ ucfirst($cliente->estado) }}
+                                <span class="cm-record-badge {{ $estilos[$cliente->estado] ?? 'bg-gray-100 text-gray-800' }}">
+                                    {{ ucfirst($cliente->estado) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-xs text-gray-500">
+                            <td role="cell" class="cm-record-date"><span class="cm-field-label" aria-hidden="true">Registro</span>
                                 {{ $cliente->created_at->format('d/m/Y H:i') }}
                             </td>
-                            <td class="px-6 py-4 cm-row-actions">
+                            <td role="cell" class="cm-row-actions">
                                 <!-- Botón Ver -->
-                                <a href="{{ route('clientes.show', $cliente->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-md transition"> Ver </a>
+                                <a href="{{ route('clientes.show', $cliente->id) }}" class="cm-record-view" data-cm-focus="view-{{ $cliente->id }}">Ver <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
                                 <!-- Botón Asignarme mejorado -->
-                                <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-md transition asignar-btn" data-cliente-id="{{ $cliente->id }}"> Asignarme </button>
+                                <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" data-cm-focus="assign-{{ $cliente->id }}" class="asignar-btn cm-record-assign" data-cliente-id="{{ $cliente->id }}"> Asignarme </button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <!-- Vista móvil como tarjetas -->
-        <div class="client-card">
-            @foreach($clientesDisponibles as $cliente)
-                <div class="client-card-item">
-                    <h2 class="font-medium">{{ $cliente->nombre }}</h2>
-                    <!-- <p class="hiddem-mobile"><strong>Email:</strong> {{ $cliente->email }}</p> -->
-                    <p><strong>Teléfono:</strong> {{ $cliente->telefono ?? '-' }}</p>
-                    <p><strong>Estado:</strong> {{ $iconos[$cliente->estado] ?? 'ℹ️' }} {{ ucfirst($cliente->estado) }}</p>
-                    <p><strong>Creado:</strong> {{ $cliente->created_at->format('d/m/Y H:i') }}</p>
-
-                    <div class="actions">
-                        <a href="{{ route('clientes.show', $cliente->id) }}" class="action-btn bg-blue-600 hover:bg-blue-700 text-white">Ver</a>
-                        <button onclick="asignarCliente({{ $cliente->id }}, '{{ $cliente->nombre }}')" class="action-btn bg-green-600 hover:bg-green-700 text-white">Asignarme</button>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
         <div class="mt-6">
             {{ $clientesDisponibles->links() }}
         </div>
@@ -124,11 +110,11 @@
 <!-- Modal de Confirmación -->
 <div id="confirmarModal" class="cm-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="index-dialog-title" data-cm-confirmation>
     <div class="modal cm-dialog-panel">
-        <h3 id="index-dialog-title">Confirmar acción</h3>
+        <h3 id="index-dialog-title">Asignar cliente</h3>
         <p class="text-sm text-gray-700 mb-4" id="modalMensaje"></p>
         <div class="container-actions cm-dialog-actions">
             <button id="cancelarFinalizar" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancelar</button>
-            <button id="confirmarFinalizar" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Confirmar</button>
+            <button id="confirmarFinalizar" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Asignarme</button>
         </div>
     </div>
 </div>
@@ -168,8 +154,6 @@
             // Deshabilitar el botón y cambiar su texto
             boton.disabled = true;
             boton.innerHTML = 'Asignando…';
-            boton.classList.remove('hover:bg-green-700');
-            boton.classList.add('bg-gray-400', 'cursor-not-allowed');
 
             try {
                 const response = await fetch(`/clientes/${clienteId}/assign`, {
@@ -196,6 +180,7 @@
                         setTimeout(() => {
                             fila.style.opacity = '0';
                             setTimeout(() => {
+                                fila.dispatchEvent(new Event('cm:before-record-removal', { bubbles: true }));
                                 fila.remove();
                                 verificarTablaVacia();
                             }, 300);
@@ -212,8 +197,6 @@
                     // Restaurar el botón
                     boton.disabled = false;
                     boton.innerHTML = textoOriginal;
-                    boton.classList.add('hover:bg-green-700');
-                    boton.classList.remove('bg-gray-400', 'cursor-not-allowed');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -222,8 +205,6 @@
                 // Restaurar botón en caso de error
                 boton.disabled = false;
                 boton.innerHTML = textoOriginal;
-                boton.classList.add('hover:bg-green-700');
-                boton.classList.remove('bg-gray-400', 'cursor-not-allowed');
             } finally {
                 isAssigning = false;
             }
@@ -283,9 +264,8 @@
         if (filas.length === 0) {
             const tbody = document.getElementById('clientes-tbody');
             tbody.innerHTML = `
-                <tr>
-                    <td colspan="6" class="px-6 py-12 text-center">
-                        <div class="text-gray-400 text-4xl mb-4">🎉</div>
+                <tr role="row">
+                    <td role="cell" colspan="5" class="cm-empty-cell">
                         <h3 class="text-lg font-medium text-gray-800 mb-2">¡No hay más clientes disponibles!</h3>
                         <p class="text-gray-600">Todos los clientes han sido asignados.</p>
                         <button onclick="refreshClientes()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"> Verificar nuevamente </button>
@@ -296,20 +276,17 @@
     }
 
     function actualizarContador() {
-        // Actualizar contador de clientes disponibles si existe
-        const contador = document.querySelector('.text-blue-600');
-        if (contador) {
-            const filas = document.querySelectorAll('.cliente-row');
-            contador.textContent = filas.length;
-        }
+        const contador = document.querySelector('[data-cm-result-count]');
+        if (contador) contador.textContent = Math.max(0, Number(contador.textContent) - 1);
     }
 
     async function refreshClientes() {
         try {
+            window.dispatchEvent(new Event('cm:save-refresh-focus'));
             const botonRefresh = document.querySelector('button[onclick="refreshClientes()"]');
             const textoOriginal = botonRefresh.innerHTML;
             botonRefresh.disabled = true;
-            botonRefresh.innerHTML = '⏳ Actualizando...'; // Simple reload para obtener datos frescos
+            botonRefresh.textContent = 'Actualizando…'; // Simple reload para obtener datos frescos
             window.location.reload();
         } catch (error) {
             console.error('Error al actualizar:', error);

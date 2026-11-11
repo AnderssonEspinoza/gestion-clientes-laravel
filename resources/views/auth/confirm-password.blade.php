@@ -1,7 +1,7 @@
 <x-guest-layout>
     <header class="cm-auth-heading"><h1>Confirmar contraseña</h1></header>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+    <div class="mb-4 text-sm text-gray-600">
+        {{ __('Confirma tu contraseña para continuar.') }}
     </div>
 
     <form method="POST" action="{{ route('password.confirm') }}">
@@ -9,7 +9,7 @@
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Contraseña')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -21,7 +21,7 @@
 
         <div class="flex justify-end mt-4">
             <x-primary-button>
-                {{ __('Confirm') }}
+                {{ __('Confirmar') }}
             </x-primary-button>
         </div>
     </form>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="cm-page cm-client-detail">
     <div class="cm-detail-card">
-        <!-- Imagen de perfil -->
+        <!-- Identidad del cliente -->
         <div class="cm-detail-banner">
             <div class="cm-detail-portrait">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">

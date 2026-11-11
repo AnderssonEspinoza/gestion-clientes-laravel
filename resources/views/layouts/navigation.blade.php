@@ -11,6 +11,7 @@
 
             <!-- Menú Desktop -->
             <div class="cm-nav-links">
+                <span class="cm-nav-caption">Espacio de trabajo</span>
                 <a href="{{ route('clientes.index') }}" class="cm-nav-link cm-nav-disponibles">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
                     Clientes Disponibles
@@ -32,7 +33,10 @@
 
             <!-- USUARIO + LOGOUT (DESKTOP) -->
             <div class="cm-nav-account">
-                <span class="cm-account-name"><small>{{ Auth::user()->getRoleDisplayName() }}</small><strong>{{ Auth::user()->name }}</strong></span>
+                <span class="cm-account-name">
+                    <span class="cm-account-initial" aria-hidden="true">{{ mb_substr(Auth::user()->name, 0, 1) }}</span>
+                    <span><strong>{{ Auth::user()->name }}</strong><small>{{ Auth::user()->getRoleDisplayName() }}</small></span>
+                </span>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="cm-signout">
